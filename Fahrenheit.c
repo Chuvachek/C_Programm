@@ -4,19 +4,17 @@
  /* Печать таблицы температур по Фаренгейту и Цельсию для fahr = 0, 20, ..., 300*/
  
  int main()
- 
+
+
  {   
-     int fahr, celsius;
-     int lower, upper, step;
-     
-     lower = 0; /* нижняя граница таблицы температур */
-     upper = 300; /*Верхняя граница */
-     step = 20; /*шаг*/
+    int fahr;
  
-     fahr = lower;
-     while (fahr <= upper) {
-         celsius = 5 * (fahr-32) / 9;
-        printf ("%d %d\n", fahr, celsius);
-         fahr = fahr + step;
-     }
- }  
+
+
+     printf("температура:");
+    
+        for (fahr = 300; fahr >= 250; fahr = fahr - 20)
+     {
+         printf("%3d %6.1f\n", fahr, (5.0/9.0) * (fahr-32));
+     }    
+  } 

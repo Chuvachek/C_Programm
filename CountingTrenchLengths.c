@@ -6,9 +6,18 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+
+// эта программа рассчитывает объем траншеи, а также объемы песка и грунта для засыпки.
+//Пользователь вводит размеры траншеи и высоту слоя песка, 
+//а программа выводит результаты по каждому материалу и общий объем.
+
+
 int main() {
     // --- ПЕРЕМЕННЫЕ ---
-    double top_tr, bot_tr, height_tr, length;
+    double top_tr, 
+    bot_tr,
+    height_tr, 
+    length;
     double height_sand;
 
     // === ШАГ 1: ВВОД ПАРАМЕТРОВ ТРАНШЕИ ===
@@ -25,6 +34,7 @@ int main() {
     printf("Введите длину траншеи (м): ");
     scanf("%lf", &length);
 
+    
     // Расчеты для траншеи
     double area_tr = (top_tr + bot_tr) / 2.0 * height_tr; // Площадь трапеции
     double volume_tr = area_tr * length;                  // Объем
@@ -53,12 +63,20 @@ int main() {
         return 1;
     }
 
+
+
+
     // 1. РАСЧЕТ ПЕСКА
     // Нижнее основание песка = дно траншеи (bot_tr)
     // Вычисляем верхнее основание песка по коэффициенту откоса траншеи
     double top_sand = bot_tr + (2.0 * slope_coeff * height_sand);
     double area_sand = (top_sand + bot_tr) / 2.0 * height_sand;
     double volume_sand = area_sand * length;
+
+
+
+
+
 
     // 2. РАСЧЕТ ГРУНТА
     // Высота грунта — это остаток высоты траншеи
@@ -67,6 +85,11 @@ int main() {
     // Верхнее основание грунта — это верх траншеи (top_tr)
     double area_soil = (top_tr + top_sand) / 2.0 * height_soil;
     double volume_soil = area_soil * length;
+
+
+
+
+
 
     // ВЫВОД РЕЗУЛЬТАТОВ ЗАСЫПКИ
     printf("\n>>> РЕЗУЛЬТАТЫ ПО ПЕСКУ:");
