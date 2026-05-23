@@ -1,24 +1,24 @@
 #include <stdio.h>
 
-#define IN 1 /*Внутри слова*/
-#define OUT 0  /*Вне слова*/
-/*подсчет слов и символов и строк*/
+int power (int n, int m);
+
+/*тест функции power*/
+
 int main()
 {
-    int c, nl, nw, nc, state;
-    state = OUT;
-    nl = nw = nc = 0;
-    while ((c = getchar()) !=EOF) {
-        ++nc;
-        if (c == '\n')
-            ++nl;
-        if (c == ' ' || c == '\n' || c == '\t')
-            state = OUT;
-        else if (state == OUT) {
-            state = IN;
-            ++nw;
-        }
-    }
-    printf("%d %d %d\n", nl, nw, nc);
+    int i; 
+    for (i = 0; i < 10; ++i)    
+        printf("%d %d %d\n ", i, power(2, i), power(-3, i));
     return 0;
+
+}
+
+/* возвращает base в п-ю степень; n >= 0 */
+int power(int base, int n)
+{
+    int i, p;
+    p = 1;
+    for (i = 1; i <= n; ++i)
+        p = p * base;
+    return p;
 }
