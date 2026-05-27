@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int power (int n, int m);
+int power (int n, int m); /*Говорим компилятору что дал
+ в коде будет написана power. n и m в ней не важны. Важны только int и int*/
 
 /*тест функции power*/
 
@@ -22,3 +23,27 @@ int power(int base, int n)
         p = p * base;
     return p;
 }
+
+
+
+
+ #include <stdio.h>
+ 
+/* Преобразует температуру из Цельсия в Фаренгейт */
+double celsius_to_fahrenheit(double celsius)
+{
+    return celsius * 9.0 / 5.0 + 32.0;
+}
+ 
+ int main()
+ {
+    double c;
+    
+    printf("Таблица преобразования температур: Цельсий -> Фаренгейт\n");
+    printf("%-15s %-15s\n", "Цельсий", "Фаренгейт");
+    printf("%-15s %-15s\n", "-------", "---------");
+    
+    for (c = 0; c <= 100; c = c + 10)
+        printf("%-15.1f %-15.1f\n", c, celsius_to_fahrenheit(c));
+    
+     return 0;
