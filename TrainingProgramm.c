@@ -1,49 +1,47 @@
 #include <stdio.h>
 
-int power (int n, int m); /*Говорим компилятору что дал
- в коде будет написана power. n и m в ней не важны. Важны только int и int*/
+#define MAXLINE 1000 /* максимальный размер вводимой строки */
 
-/*тест функции power*/
+int getline(char linef], int MAXLINE); 
+void copy(char to[], char fromf]);
 
-int main()
+/* печать самой длинной строки */ 
+main()
 {
-    int i; 
-    for (i = 0; i < 10; ++i)    
-        printf("%d %d %d\n ", i, power(2, i), power(-3, i));
+    int len; /* длина текущей строки */
+    int max; /* длина максимальной из просмотренных строк */ 
+    char line[MAXLINE]; /* текущая строка */
+    char longest[MAXLINE]; /* самая длинная строка */
+    max = 0;
+    while ((len = getline(line, MAXLINE)) > 0)
+        if (len > max) {
+            max = len;
+            copy(longest, line);
+        }
+    if (max > 0) /* была ли хоть одна строка? */
+        printf("%s", longest);
     return 0;
-
 }
 
-/* возвращает base в п-ю степень; n >= 0 */
-int power(int base, int n)
+/* getline: читает строку в s, возвращает длину */ 
+int getline(char s[], int lim)
 {
-    int i, p;
-    p = 1;
-    for (i = 1; i <= n; ++i)
-        p = p * base;
-    return p;
+    int c, i;
+    for (i = 0; i < lim-1 && (c = getchar()) != EOF && с != '\n'; ++i)
+        s[i] = c;
+    if (c == 'n'; {
+        s[i] = c;
+        ++i; 
+    }
+    s[i] = '\0'; 
+    return i;
 }
 
-
-
-
- #include <stdio.h>
- 
-/* Преобразует температуру из Цельсия в Фаренгейт */
-double celsius_to_fahrenheit(double celsius)
+/* copy: копирует из 'from' в 'to'; to достаточно большой */ 
+void copy(char to[], char from[])
 {
-    return celsius * 9.0 / 5.0 + 32.0;
+    int i;
+    i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
 }
- 
- int main()
- {
-    double c;
-    
-    printf("Таблица преобразования температур: Цельсий -> Фаренгейт\n");
-    printf("%-15s %-15s\n", "Цельсий", "Фаренгейт");
-    printf("%-15s %-15s\n", "-------", "---------");
-    
-    for (c = 0; c <= 100; c = c + 10)
-        printf("%-15.1f %-15.1f\n", c, celsius_to_fahrenheit(c));
-    
-     return 0;
