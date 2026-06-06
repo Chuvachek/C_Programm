@@ -1,47 +1,77 @@
 #include <stdio.h>
 
-#define MAXLINE 1000 /* максимальный размер вводимой строки */
+#define MAXLINE 1000 /* Наш лимит на ОДИН кусочек строки */
 
-int getline(char linef], int MAXLINE); 
-void copy(char to[], char fromf]);
+int getline(char s[], int lim);
+void copy(char to[], char from[]);
 
-/* печать самой длинной строки */ 
-main()
+int main()
 {
-    int len; /* длина текущей строки */
-    int max; /* длина максимальной из просмотренных строк */ 
-    char line[MAXLINE]; /* текущая строка */
-    char longest[MAXLINE]; /* самая длинная строка */
+    int len;            /* Длина текущего КУСОЧКА строки */
+    int current_len;    /* ОБЩАЯ длина всей текущей строки (даже если она из 100 кусочков) */
+    int max;            /* Рекордная длина самой длинной строки */
+    char line[MAXLINE];    /* Массив для текущего кусочка */
+    char longest[MAXLINE]; /* Массив для сохранения НАЧАЛА самой длинной строки */
+
     max = 0;
-    while ((len = getline(line, MAXLINE)) > 0)
-        if (len > max) {
-            max = len;
+    current_len = 0; /* Изначально длина текущей строки равна 0 */
+
+    /* Читаем по кусочкам. getline возвращает длину очередного куска */
+    while ((len = getline(line, MAXLINE)) > 0) {
+        
+        /* Плюсуем длину этого куска к ОБЩЕЙ длине текущей строки */
+        current_len = current_len + len;
+
+        /* Если это САМЫЙ ПЕРВЫЙ кусок строки и он потенциально бьет рекорд,
+           сохраняем его начало в массив longest, чтобы было что напечатать */
+        if (current_len == len && current_len > max) {
             copy(longest, line);
         }
-    if (max > 0) /* была ли хоть одна строка? */
-        printf("%s", longest);
+
+        /* КЛЮЧЕВАЯ ПРОВЕРКА: Если на конце кусочка лежит Enter ('\n'),
+           значит строка НАКОНЕЦ-ТО ЗАКОНЧИЛАСЬ! */
+        if (line[len - 1] == '\n') {
+            
+            /* Строка закончилась, проверяем: побила ли её ПОЛНАЯ длина рекорд? */
+            if (current_len > max) {
+                max = current_len; /* Записываем новый рекорд длины */
+            }
+            
+            /* Сбрасываем счетчик полной длины в 0, ведь следующая строка будет новой! */
+            current_len = 0; 
+        }
+    }
+
+    /* Вывод результатов */
+    if (max > 0) {
+        printf("\n--- РЕЗУЛЬТАТ ---\n");
+        printf("Начало самой длинной строки: %s", longest);
+        printf("Полная длина этой строки составила: %d символов!\n", max);
+    }
+
     return 0;
 }
 
-/* getline: читает строку в s, возвращает длину */ 
+/* Функция getline остается ОДИН В ОДИН как в книге */
 int getline(char s[], int lim)
 {
     int c, i;
-    for (i = 0; i < lim-1 && (c = getchar()) != EOF && с != '\n'; ++i)
+    for (i = 0; i < lim-1 && (c = getchar()) != EOF && c != '\n'; ++i) {
         s[i] = c;
-    if (c == 'n'; {
-        s[i] = c;
-        ++i; 
     }
-    s[i] = '\0'; 
+    if (c == '\n') {
+        s[i] = c;
+        ++i;
+    }
+    s[i] = '\0';
     return i;
 }
 
-/* copy: копирует из 'from' в 'to'; to достаточно большой */ 
+/* Функция copy тоже стандартная */
 void copy(char to[], char from[])
 {
-    int i;
-    i = 0;
-    while ((to[i] = from[i]) != '\0')
+    int i = 0;
+    while ((to[i] = from[i]) != '\0') {
         ++i;
+    }
 }
