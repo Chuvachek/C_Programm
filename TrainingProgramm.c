@@ -1,77 +1,12 @@
 #include <stdio.h>
+#include <stdbool.h>
+#include <inttypes.h> 
 
-#define MAXLINE 1000 /* Наш лимит на ОДИН кусочек строки */
-
-int getline(char s[], int lim);
-void copy(char to[], char from[]);
-
-int main()
+int main(int argc, char* argv[])
 {
-    int len;            /* Длина текущего КУСОЧКА строки */
-    int current_len;    /* ОБЩАЯ длина всей текущей строки (даже если она из 100 кусочков) */
-    int max;            /* Рекордная длина самой длинной строки */
-    char line[MAXLINE];    /* Массив для текущего кусочка */
-    char longest[MAXLINE]; /* Массив для сохранения НАЧАЛА самой длинной строки */
 
-    max = 0;
-    current_len = 0; /* Изначально длина текущей строки равна 0 */
-
-    /* Читаем по кусочкам. getline возвращает длину очередного куска */
-    while ((len = getline(line, MAXLINE)) > 0) {
-        
-        /* Плюсуем длину этого куска к ОБЩЕЙ длине текущей строки */
-        current_len = current_len + len;
-
-        /* Если это САМЫЙ ПЕРВЫЙ кусок строки и он потенциально бьет рекорд,
-           сохраняем его начало в массив longest, чтобы было что напечатать */
-        if (current_len == len && current_len > max) {
-            copy(longest, line);
-        }
-
-        /* КЛЮЧЕВАЯ ПРОВЕРКА: Если на конце кусочка лежит Enter ('\n'),
-           значит строка НАКОНЕЦ-ТО ЗАКОНЧИЛАСЬ! */
-        if (line[len - 1] == '\n') {
-            
-            /* Строка закончилась, проверяем: побила ли её ПОЛНАЯ длина рекорд? */
-            if (current_len > max) {
-                max = current_len; /* Записываем новый рекорд длины */
-            }
-            
-            /* Сбрасываем счетчик полной длины в 0, ведь следующая строка будет новой! */
-            current_len = 0; 
-        }
-    }
-
-    /* Вывод результатов */
-    if (max > 0) {
-        printf("\n--- РЕЗУЛЬТАТ ---\n");
-        printf("Начало самой длинной строки: %s", longest);
-        printf("Полная длина этой строки составила: %d символов!\n", max);
-    }
+    int8_t x = 127;
+    printf("x = %d\n", x);
 
     return 0;
-}
-
-/* Функция getline остается ОДИН В ОДИН как в книге */
-int getline(char s[], int lim)
-{
-    int c, i;
-    for (i = 0; i < lim-1 && (c = getchar()) != EOF && c != '\n'; ++i) {
-        s[i] = c;
-    }
-    if (c == '\n') {
-        s[i] = c;
-        ++i;
-    }
-    s[i] = '\0';
-    return i;
-}
-
-/* Функция copy тоже стандартная */
-void copy(char to[], char from[])
-{
-    int i = 0;
-    while ((to[i] = from[i]) != '\0') {
-        ++i;
-    }
 }
